@@ -2,9 +2,10 @@ import Cart from '@/features/cart/Cart';
 import Menu from '@/features/menu/Menu';
 import CreateOrder from '@/features/order/CreateOrder';
 import Order from '@/features/order/Order';
+import Applayout from '@/ui/Applayout';
 import Home from '@/ui/Home';
 
-export const routes = [
+const routes = [
     {
         path: '/',
         Component: Home,
@@ -24,5 +25,12 @@ export const routes = [
     {
         path: '/order/:orderId',
         Component: Order,
+    },
+];
+
+export const appLayoutRoute = [
+    {
+        Component: Applayout,
+        children: routes,
     },
 ];
