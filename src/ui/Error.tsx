@@ -1,5 +1,5 @@
 import { getErrorMessage } from '@/utils/helpers';
-import { useNavigate, useRouteError } from 'react-router-dom';
+import { useNavigate, useRouteError } from 'react-router';
 
 const Error = () => {
     const navigate = useNavigate();

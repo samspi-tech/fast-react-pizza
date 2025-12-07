@@ -1,4 +1,4 @@
-import { isRouteErrorResponse } from 'react-router-dom';
+import { isRouteErrorResponse } from 'react-router';
 
 export const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('en', {

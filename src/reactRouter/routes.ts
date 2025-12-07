@@ -3,6 +3,7 @@ import Menu from '@/features/menu/Menu';
 import { menuLoader } from '@/features/menu/menuLoader';
 import CreateOrder from '@/features/order/CreateOrder';
 import Order from '@/features/order/Order';
+import { orderLoader } from '@/features/order/orderLoader';
 import Applayout from '@/ui/Applayout';
 import Error from '@/ui/Error';
 import Home from '@/ui/Home';
@@ -28,6 +29,8 @@ const routes = [
     },
     {
         path: '/order/:orderId',
+        loader: orderLoader,
+        ErrorBoundary: Error,
         Component: Order,
     },
 ];

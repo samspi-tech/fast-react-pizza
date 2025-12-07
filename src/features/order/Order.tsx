@@ -1,7 +1,9 @@
 import { calcMinutesLeft, formatCurrency, formatDate } from '@/utils/helpers';
-import { order } from './dataSource';
+import { useLoaderData } from 'react-router';
+import type { PizzaOrder } from './types';
 
 const Order = () => {
+    const order = useLoaderData<PizzaOrder>();
     const { priority, priorityPrice, orderPrice, estimatedDelivery } = order;
 
     const deliveryIn = calcMinutesLeft(estimatedDelivery);
