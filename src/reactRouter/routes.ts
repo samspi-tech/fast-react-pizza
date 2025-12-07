@@ -1,5 +1,6 @@
 import Cart from '@/features/cart/Cart';
 import Menu from '@/features/menu/Menu';
+import { menuLoader } from '@/features/menu/menuLoader';
 import CreateOrder from '@/features/order/CreateOrder';
 import Order from '@/features/order/Order';
 import Applayout from '@/ui/Applayout';
@@ -12,6 +13,7 @@ const routes = [
     },
     {
         path: '/menu',
+        loader: menuLoader,
         Component: Menu,
     },
     {
