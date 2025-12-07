@@ -1,12 +1,7 @@
 import { getOrder } from '@/services/restaurant.service';
+import type { Params } from 'react-router';
 
-type Params = {
-    params: {
-        orderId: string;
-    };
-};
-
-export const orderLoader = async ({ params }: Params) => {
+export const orderLoader = async ({ params }: { params: Params<string> }) => {
     const order = await getOrder(params.orderId);
 
     return order;
