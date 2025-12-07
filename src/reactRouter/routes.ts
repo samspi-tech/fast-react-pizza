@@ -4,6 +4,7 @@ import { menuLoader } from '@/features/menu/menuLoader';
 import CreateOrder from '@/features/order/CreateOrder';
 import Order from '@/features/order/Order';
 import Applayout from '@/ui/Applayout';
+import Error from '@/ui/Error';
 import Home from '@/ui/Home';
 
 const routes = [
@@ -14,6 +15,7 @@ const routes = [
     {
         path: '/menu',
         loader: menuLoader,
+        ErrorBoundary: Error,
         Component: Menu,
     },
     {
@@ -33,6 +35,7 @@ const routes = [
 export const appLayoutRoute = [
     {
         Component: Applayout,
+        ErrorBoundary: Error,
         children: routes,
     },
 ];

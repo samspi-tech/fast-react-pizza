@@ -1,3 +1,5 @@
+import { isRouteErrorResponse } from 'react-router-dom';
+
 export const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('en', {
         style: 'currency',
@@ -26,3 +28,21 @@ export const isValidPhone = (str: string) =>
     /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
         str
     );
+
+export const getErrorMessage = (error: unknown) => {
+    switch (true) {
+        case isRouteErrorResponse(error): {
+            return error.data;
+        }
+        case error instanceof Error: {
+            return error.message;
+        }
+        case typeof error === 'string': {
+            return error;
+        }
+        default: {
+            console.error(error);
+            return 'Unknown error';
+        }
+    }
+};
