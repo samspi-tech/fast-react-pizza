@@ -26,3 +26,7 @@ export type CreateOrderType = {
     priority: boolean;
     cart: CartItem;
 };
+
+export type FormErrors = {
+    phone?: string;
+};

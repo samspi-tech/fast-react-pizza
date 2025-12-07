@@ -1,7 +1,13 @@
-import { Form } from 'react-router';
+import { Form, useActionData, useNavigation } from 'react-router';
 import { fakeCart } from '../cart/dataSource';
+import type { FormErrors } from './types';
 
 const CreateOrder = () => {
+    const navigation = useNavigation();
+    const formErrors = useActionData<FormErrors>();
+
+    const isSubmitting = navigation.state === 'submitting';
+
     const cart = fakeCart;
 
     return (
@@ -17,6 +23,7 @@ const CreateOrder = () => {
                     <div>
                         <input type="tel" name="phone" required />
                     </div>
+                    {formErrors?.phone && <small>{formErrors.phone}</small>}
                 </div>
                 <div>
                     <label>Address</label>
@@ -36,7 +43,9 @@ const CreateOrder = () => {
                         name="cart"
                         value={JSON.stringify(cart)}
                     />
-                    <button type="submit">Order now</button>
+                    <button type="submit" disabled={isSubmitting}>
+                        {isSubmitting ? 'Placing order...' : 'Order now'}
+                    </button>
                 </div>
             </Form>
         </div>
