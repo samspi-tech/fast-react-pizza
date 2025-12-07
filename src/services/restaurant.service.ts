@@ -1,5 +1,5 @@
 import type { PizzaMenu } from '@/features/menu/types';
-import type { PizzaOrder } from '@/features/order/types';
+import type { CreateOrderType, PizzaOrder } from '@/features/order/types';
 import { PIZZA_BASE_URL } from '@/utils/constants';
 
 export const getMenu = async (): Promise<PizzaMenu> => {
@@ -18,4 +18,25 @@ export const getOrder = async (id?: string): Promise<PizzaOrder> => {
 
     const { data } = (await res.json()) as { data: PizzaOrder };
     return data;
+};
+
+export const createOrder = async (
+    newOrder: CreateOrderType
+): Promise<PizzaOrder> => {
+    try {
+        const res = await fetch(`${PIZZA_BASE_URL}/order`, {
+            method: 'POST',
+            body: JSON.stringify(newOrder),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!res.ok) throw Error();
+
+        const { data } = (await res.json()) as { data: PizzaOrder };
+        return data;
+    } catch {
+        throw Error('Failed creating your order');
+    }
 };

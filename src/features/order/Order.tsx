@@ -6,7 +6,7 @@ const Order = () => {
     const order = useLoaderData<PizzaOrder>();
     const { priority, priorityPrice, orderPrice, estimatedDelivery } = order;
 
-    const deliveryIn = calcMinutesLeft(estimatedDelivery);
+    const deliveryIn = calcMinutesLeft(estimatedDelivery!);
 
     return (
         <div>
@@ -18,20 +18,20 @@ const Order = () => {
                 <p>
                     {deliveryIn >= 0
                         ? `Only ${calcMinutesLeft(
-                              estimatedDelivery
+                              estimatedDelivery!
                           )} minutes left 😃`
                         : 'Order should have arrived'}
                 </p>
-                <p>(Estimated delivery: {formatDate(estimatedDelivery)})</p>
+                <p>(Estimated delivery: {formatDate(estimatedDelivery!)})</p>
             </div>
             <div>
-                <p>Price pizza: {formatCurrency(orderPrice)}</p>
+                <p>Price pizza: {formatCurrency(orderPrice!)}</p>
                 {priority && (
-                    <p>Price priority: {formatCurrency(priorityPrice)}</p>
+                    <p>Price priority: {formatCurrency(priorityPrice!)}</p>
                 )}
                 <p>
                     To pay on delivery:{' '}
-                    {formatCurrency(orderPrice + priorityPrice)}
+                    {formatCurrency(orderPrice! + priorityPrice!)}
                 </p>
             </div>
         </div>
