@@ -3,7 +3,7 @@ import Header from './Header';
 import { Outlet, useNavigation } from 'react-router';
 import Loading from './Loading';
 
-const Applayout = () => {
+const AppLayout = () => {
     const navigation = useNavigation();
     const isLoading = navigation.state === 'loading';
 
@@ -19,4 +19,4 @@ const Applayout = () => {
     );
 };
 
-export default Applayout;
+export default AppLayout;

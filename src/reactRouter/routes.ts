@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router';
-import Applayout from '@/ui/Applayout';
+import AppLayout from '@/ui/AppLayout.tsx';
 import Error from '@/ui/Error';
 import Home from '@/ui/Home';
 import Menu from '@/features/menu/Menu';
@@ -12,7 +12,7 @@ import { createOrderAction } from '@/features/order/orderAction';
 
 export const router = createBrowserRouter([
     {
-        Component: Applayout,
+        Component: AppLayout,
         ErrorBoundary: Error,
         children: [
             {
