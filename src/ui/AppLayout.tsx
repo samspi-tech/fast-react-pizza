@@ -1,6 +1,6 @@
 import CartOverview from '@/features/cart/CartOverview';
 import Header from './Header';
-import {Outlet, useNavigation} from 'react-router';
+import { Outlet, useNavigation } from 'react-router';
 import Loading from './Loading';
 
 const AppLayout = () => {
@@ -9,12 +9,12 @@ const AppLayout = () => {
 
     return (
         <div className="layout">
-            {isLoading && <Loading/>}
-            <Header/>
+            {isLoading && <Loading />}
+            <Header />
             <main>
-                <Outlet/>
+                <Outlet />
             </main>
-            <CartOverview/>
+            <CartOverview />
         </div>
     );
 };
