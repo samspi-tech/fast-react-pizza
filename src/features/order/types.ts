@@ -1,7 +1,7 @@
-import type { CartItem } from '../cart/types';
+import type { CartItemTypes } from '../cart/types';
 
 export type PizzaOrder = {
-    cart: CartItem[];
+    cart: CartItemTypes[];
     customer: string;
     estimatedDelivery?: string;
     id?: string;
@@ -24,7 +24,7 @@ export type CreateOrderType = {
     phone: string;
     address: string;
     priority: boolean;
-    cart: CartItem;
+    cart: CartItemTypes;
 };
 
 export type FormErrors = {

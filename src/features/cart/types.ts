@@ -1,4 +1,4 @@
-export type CartItem = {
+export type CartItemTypes = {
     addIngredients?: string[];
     name: string;
     pizzaId?: number;

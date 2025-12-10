@@ -1,11 +1,15 @@
 import SearchOrder from '@/features/order/SearchOrder';
 import { Link } from 'react-router';
+import Username from '@/features/user/Username.tsx';
 
 const Header = () => {
     return (
-        <header className="bg-yellow-500">
-            <Link to="/">Fast React Pizza Co.</Link>
+        <header className="flex items-center justify-between border-b border-stone-200 bg-yellow-500 px-4 py-3 uppercase sm:px-6">
+            <Link to="/" className="tracking-widest">
+                Fast React Pizza Co.
+            </Link>
             <SearchOrder />
+            <Username />
         </header>
     );
 };
