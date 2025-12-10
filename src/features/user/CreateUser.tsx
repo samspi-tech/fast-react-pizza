@@ -1,12 +1,22 @@
 import { type FormEvent, useState } from 'react';
 import Button from '@/ui/Button.tsx';
+import { useAppDispatch } from '@/redux/hooks.ts';
+import { updateName } from '@/redux/slices/userSlice.ts';
+import { useNavigate } from 'react-router';
 
 const CreateUser = () => {
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+
     const [username, setUsername] = useState('');
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!username) return;
+
+        dispatch(updateName(username));
+        setUsername('');
+        navigate('/menu');
     };
 
     return (

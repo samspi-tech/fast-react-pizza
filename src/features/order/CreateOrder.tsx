@@ -2,10 +2,12 @@ import { Form, useActionData, useNavigation } from 'react-router';
 import { fakeCart as cart } from '../cart/dataSource';
 import type { FormErrors } from './types';
 import Button from '@/ui/Button.tsx';
+import { useAppSelector } from '@/redux/hooks.ts';
 
 const CreateOrder = () => {
     const navigation = useNavigation();
     const formErrors = useActionData<FormErrors>();
+    const { username } = useAppSelector((state) => state.user);
 
     const isSubmitting = navigation.state === 'submitting';
 
@@ -16,21 +18,29 @@ const CreateOrder = () => {
             </h2>
             <Form method="post">
                 <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
-                    <label className="sm:basis-40">First Name</label>
+                    <label htmlFor="customer" className="sm:basis-40">
+                        First Name
+                    </label>
                     <input
                         required
                         type="text"
+                        id="customer"
                         name="customer"
                         className="input grow"
+                        defaultValue={username}
                     />
                 </div>
                 <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
-                    <label className="sm:basis-40">Phone number</label>
+                    <label htmlFor="phone" className="sm:basis-40">
+                        Phone number
+                    </label>
                     <div className="grow">
                         <input
                             required
                             type="tel"
+                            id="phone"
                             name="phone"
+                            autoComplete="tel"
                             className="input w-full"
                         />
                         {formErrors?.phone && (
@@ -41,13 +51,17 @@ const CreateOrder = () => {
                     </div>
                 </div>
                 <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
-                    <label className="sm:basis-40">Address</label>
+                    <label htmlFor="address" className="sm:basis-40">
+                        Address
+                    </label>
                     <div className="grow">
                         <input
                             required
                             type="text"
+                            id="address"
                             name="address"
                             className="input w-full"
+                            autoComplete="street-address"
                         />
                     </div>
                 </div>
