@@ -6,8 +6,8 @@ import {
     addItem,
     getCurrentPizzaQuantityById,
 } from '@/redux/slices/cartSlice.ts';
-import DeleteItem from '@/features/cart/DeleteItem.tsx';
-import UpdateItemQuantity from '@/features/cart/UpdateItemQuantity.tsx';
+import DeleteItem from '@/ui/DeleteItem.tsx';
+import UpdateItemQuantity from '@/ui/UpdateItemQuantity.tsx';
 
 type MenuItemProps = {
     pizza: Pizza;

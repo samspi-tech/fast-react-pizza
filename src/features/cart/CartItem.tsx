@@ -1,7 +1,7 @@
 import { formatCurrency } from '@/utils/helpers.ts';
 import type { CartItemTypes } from '@/features/cart/types.ts';
-import DeleteItem from '@/features/cart/DeleteItem.tsx';
-import UpdateItemQuantity from '@/features/cart/UpdateItemQuantity.tsx';
+import DeleteItem from '@/ui/DeleteItem.tsx';
+import UpdateItemQuantity from '@/ui/UpdateItemQuantity.tsx';
 
 type CartItemsProps = {
     item: CartItemTypes;
