@@ -1,5 +1,9 @@
-import type { CartState } from '@/redux/types.ts';
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import type { CartState, RootState } from '@/redux/types.ts';
+import {
+    createSelector,
+    createSlice,
+    type PayloadAction,
+} from '@reduxjs/toolkit';
 import type { CartItemTypes } from '@/features/cart/types.ts';
 
 const initialState: CartState = {
@@ -49,3 +53,22 @@ export const {
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
+
+export const getCart = createSelector(
+    [(state: RootState) => state.cart],
+    ({ cart }) => cart
+);
+
+export const getTotalCartPrice = createSelector(
+    [(state: RootState) => state.cart],
+    ({ cart }) => {
+        return cart.reduce((sum, item) => sum + item.totalPrice, 0);
+    }
+);
+
+export const getTotalCartQuantity = createSelector(
+    [(state: RootState) => state.cart],
+    ({ cart }) => {
+        return cart.reduce((sum, item) => sum + item.quantity, 0);
+    }
+);

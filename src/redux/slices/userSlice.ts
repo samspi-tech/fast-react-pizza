@@ -1,5 +1,9 @@
-import type { UserState } from '@/redux/types.ts';
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import type { RootState, UserState } from '@/redux/types.ts';
+import {
+    createSelector,
+    createSlice,
+    type PayloadAction,
+} from '@reduxjs/toolkit';
 
 const initialState: UserState = {
     username: '',
@@ -18,3 +22,8 @@ const userSlice = createSlice({
 export const { updateName } = userSlice.actions;
 
 export default userSlice.reducer;
+
+export const getUsername = createSelector(
+    [(state: RootState) => state.user],
+    (user) => user.username
+);

@@ -1,11 +1,19 @@
 import LinkButton from '@/ui/LinkButton.tsx';
 import Button from '@/ui/Button.tsx';
-import { fakeCart } from '@/features/cart/dataSource.ts';
 import CartItem from '@/features/cart/CartItem.tsx';
-import { useAppSelector } from '@/redux/hooks.ts';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks.ts';
+import { clearCart, getCart } from '@/redux/slices/cartSlice.ts';
+import { getUsername } from '@/redux/slices/userSlice.ts';
+import EmptyCart from '@/features/cart/EmptyCart.tsx';
 
 const Cart = () => {
-    const { username } = useAppSelector((state) => state.user);
+    const dispatch = useAppDispatch();
+    const cart = useAppSelector(getCart);
+    const username = useAppSelector(getUsername);
+
+    if (!cart.length) return <EmptyCart />;
+
+    const handleClearCart = () => dispatch(clearCart());
 
     return (
         <div className="px-4 py-3">
@@ -14,7 +22,7 @@ const Cart = () => {
                 Your cart, {username}.
             </h2>
             <ul className="mt-3 divide-y divide-stone-200 border-b border-stone-200">
-                {fakeCart.map((item) => (
+                {cart.map((item) => (
                     <CartItem key={item.pizzaId} item={item} />
                 ))}
             </ul>
@@ -22,7 +30,11 @@ const Cart = () => {
                 <Button variant="primary" element="link" path="/order/new">
                     Order pizzas
                 </Button>
-                <Button element="button" variant="secondary">
+                <Button
+                    element="button"
+                    variant="secondary"
+                    onClick={handleClearCart}
+                >
                     Clear cart
                 </Button>
             </div>

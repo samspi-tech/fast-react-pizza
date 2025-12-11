@@ -1,15 +1,37 @@
 import { formatCurrency } from '@/utils/helpers';
 import type { Pizza } from './types';
 import Button from '@/ui/Button.tsx';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks.ts';
+import { addItem, increaseItemQuantity } from '@/redux/slices/cartSlice.ts';
 
 type MenuItemProps = {
     pizza: Pizza;
 };
 
 const MenuItem = ({ pizza }: MenuItemProps) => {
-    const { name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
+    const dispatch = useAppDispatch();
+    const { cart } = useAppSelector((state) => state.cart);
 
+    const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
     const formattedPrice = formatCurrency(unitPrice);
+
+    const handleAddItemToCart = () => {
+        const isPizzaInTheCart = cart.map((item) => item.pizzaId).includes(id);
+
+        if (isPizzaInTheCart) {
+            dispatch(increaseItemQuantity(id));
+        } else {
+            const payload = {
+                pizzaId: id,
+                name,
+                unitPrice,
+                quantity: 1,
+                totalPrice: unitPrice,
+            };
+
+            dispatch(addItem(payload));
+        }
+    };
 
     return (
         <li className="flex gap-4 py-2">
@@ -31,9 +53,15 @@ const MenuItem = ({ pizza }: MenuItemProps) => {
                     ) : (
                         <p>{formattedPrice}</p>
                     )}
-                    <Button variant="small" element="button">
-                        Add to cart
-                    </Button>
+                    {!soldOut && (
+                        <Button
+                            variant="small"
+                            element="button"
+                            onClick={handleAddItemToCart}
+                        >
+                            Add to cart
+                        </Button>
+                    )}
                 </div>
             </div>
         </li>
