@@ -1,16 +1,29 @@
 import { Form, useActionData, useNavigation } from 'react-router';
-import { fakeCart as cart } from '../cart/dataSource';
 import type { FormErrors } from './types';
 import Button from '@/ui/Button.tsx';
 import { useAppSelector } from '@/redux/hooks.ts';
 import { getUsername } from '@/redux/slices/userSlice.ts';
+import { getCart, getTotalCartPrice } from '@/redux/slices/cartSlice.ts';
+import EmptyCart from '@/features/cart/EmptyCart.tsx';
+import { formatCurrency } from '@/utils/helpers.ts';
+import { useState } from 'react';
 
 const CreateOrder = () => {
     const navigation = useNavigation();
+    const isSubmitting = navigation.state === 'submitting';
+
+    const cart = useAppSelector(getCart);
     const username = useAppSelector(getUsername);
     const formErrors = useActionData<FormErrors>();
+    const [isChecked, setIsChecked] = useState(false);
+    const totalCartPrice = useAppSelector(getTotalCartPrice);
 
-    const isSubmitting = navigation.state === 'submitting';
+    const handleCheckbox = () => setIsChecked((prevState) => !prevState);
+
+    const priorityPrice = isChecked ? totalCartPrice * 0.2 : 0;
+    const totalPrice = totalCartPrice + priorityPrice;
+
+    if (!cart.length) return <EmptyCart />;
 
     return (
         <div className="px-4 py-6">
@@ -71,6 +84,8 @@ const CreateOrder = () => {
                         id="priority"
                         name="priority"
                         type="checkbox"
+                        checked={isChecked}
+                        onClick={handleCheckbox}
                         className="h-6 w-6 accent-yellow-400 focus:ring-3 focus:ring-yellow-400 focus:ring-offset-2 focus:outline-none"
                     />
                     <label className="font-medium" htmlFor="priority">
@@ -89,7 +104,9 @@ const CreateOrder = () => {
                         variant="primary"
                         disabled={isSubmitting}
                     >
-                        {isSubmitting ? 'Placing order...' : 'Order now'}
+                        {isSubmitting
+                            ? 'Placing order...'
+                            : `Order now for ${formatCurrency(totalPrice)}`}
                     </Button>
                 </div>
             </Form>

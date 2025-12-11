@@ -3,6 +3,8 @@ import type { CartItemTypes } from '../cart/types';
 import { redirect } from 'react-router';
 import type { CreateOrderType, FormData, FormErrors } from './types';
 import { isValidPhone } from '@/utils/helpers';
+import store from '@/redux/store.ts';
+import { clearCart } from '@/redux/slices/cartSlice.ts';
 
 export const createOrderAction = async ({ request }: { request: Request }) => {
     const formData = await request.formData();
@@ -27,6 +29,8 @@ export const createOrderAction = async ({ request }: { request: Request }) => {
     }
 
     const newOrder = await createOrder(order);
+
+    store.dispatch(clearCart());
 
     return redirect(`/order/${newOrder.id}`);
 };
