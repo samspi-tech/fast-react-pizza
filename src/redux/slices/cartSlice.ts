@@ -72,3 +72,10 @@ export const getTotalCartQuantity = createSelector(
         return cart.reduce((sum, item) => sum + item.quantity, 0);
     }
 );
+
+export const getCurrentPizzaQuantityById = (id: number) =>
+    createSelector([(state: RootState) => state.cart], ({ cart }) => {
+        const item = cart.find((item) => item.pizzaId === id);
+
+        return item?.quantity ?? 0;
+    });

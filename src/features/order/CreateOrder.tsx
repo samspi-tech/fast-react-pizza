@@ -3,11 +3,12 @@ import { fakeCart as cart } from '../cart/dataSource';
 import type { FormErrors } from './types';
 import Button from '@/ui/Button.tsx';
 import { useAppSelector } from '@/redux/hooks.ts';
+import { getUsername } from '@/redux/slices/userSlice.ts';
 
 const CreateOrder = () => {
     const navigation = useNavigation();
+    const username = useAppSelector(getUsername);
     const formErrors = useActionData<FormErrors>();
-    const { username } = useAppSelector((state) => state.user);
 
     const isSubmitting = navigation.state === 'submitting';
 

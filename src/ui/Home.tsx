@@ -1,9 +1,10 @@
 import CreateUser from '@/features/user/CreateUser.tsx';
 import { useAppSelector } from '@/redux/hooks.ts';
 import Button from '@/ui/Button.tsx';
+import { getUsername } from '@/redux/slices/userSlice.ts';
 
 const Home = () => {
-    const { username } = useAppSelector((state) => state.user);
+    const username = useAppSelector(getUsername);
 
     return (
         <div className="my-10 px-4 text-center sm:my-16">

@@ -4,12 +4,15 @@ import { Outlet, useNavigation } from 'react-router';
 import Loading from './Loading';
 import { useAppSelector } from '@/redux/hooks.ts';
 import { Activity } from 'react';
+import { getCart } from '@/redux/slices/cartSlice.ts';
+import { getUsername } from '@/redux/slices/userSlice.ts';
 
 const AppLayout = () => {
     const navigation = useNavigation();
     const isLoading = navigation.state === 'loading';
-    const { cart } = useAppSelector((state) => state.cart);
-    const { username } = useAppSelector((state) => state.user);
+
+    const cart = useAppSelector(getCart);
+    const username = useAppSelector(getUsername);
 
     const isCartVisible = username && cart.length > 0;
 

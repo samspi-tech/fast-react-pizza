@@ -4,7 +4,6 @@ import LinkButton from '@/ui/LinkButton.tsx';
 
 const Error = () => {
     const error = useRouteError();
-
     const errorMessage = getErrorMessage(error);
 
     return (
