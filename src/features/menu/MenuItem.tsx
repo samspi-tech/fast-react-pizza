@@ -7,6 +7,7 @@ import {
     getCurrentPizzaQuantityById,
 } from '@/redux/slices/cartSlice.ts';
 import DeleteItem from '@/features/cart/DeleteItem.tsx';
+import UpdateItemQuantity from '@/features/cart/UpdateItemQuantity.tsx';
 
 type MenuItemProps = {
     pizza: Pizza;
@@ -55,7 +56,12 @@ const MenuItem = ({ pizza }: MenuItemProps) => {
                     ) : (
                         <p>{formattedPrice}</p>
                     )}
-                    {isPizzaInCart && <DeleteItem id={id} />}
+                    {isPizzaInCart && (
+                        <div className="flex items-center gap-3 sm:gap-4">
+                            <UpdateItemQuantity id={id} />
+                            <DeleteItem id={id} />
+                        </div>
+                    )}
                     {!soldOut && !isPizzaInCart && (
                         <Button
                             variant="small"
