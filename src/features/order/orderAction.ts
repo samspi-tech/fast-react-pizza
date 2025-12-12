@@ -15,7 +15,7 @@ export const createOrderAction = async ({ request }: { request: Request }) => {
     const order: CreateOrderType = {
         ...data,
         cart,
-        priority: data.priority === 'on',
+        priority: data.priority === 'true',
     };
 
     const errors: FormErrors = {

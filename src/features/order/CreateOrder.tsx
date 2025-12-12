@@ -15,12 +15,10 @@ const CreateOrder = () => {
     const cart = useAppSelector(getCart);
     const username = useAppSelector(getUsername);
     const formErrors = useActionData<FormErrors>();
-    const [isChecked, setIsChecked] = useState(false);
+    const [hasPriority, setHasPriority] = useState(false);
     const totalCartPrice = useAppSelector(getTotalCartPrice);
 
-    const handleCheckbox = () => setIsChecked((prevState) => !prevState);
-
-    const priorityPrice = isChecked ? totalCartPrice * 0.2 : 0;
+    const priorityPrice = hasPriority ? totalCartPrice * 0.2 : 0;
     const totalPrice = totalCartPrice + priorityPrice;
 
     if (!cart.length) return <EmptyCart />;
@@ -84,8 +82,8 @@ const CreateOrder = () => {
                         id="priority"
                         name="priority"
                         type="checkbox"
-                        checked={isChecked}
-                        onClick={handleCheckbox}
+                        value={String(hasPriority)}
+                        onChange={(e) => setHasPriority(e.target.checked)}
                         className="h-6 w-6 accent-yellow-400 focus:ring-3 focus:ring-yellow-400 focus:ring-offset-2 focus:outline-none"
                     />
                     <label className="font-medium" htmlFor="priority">
