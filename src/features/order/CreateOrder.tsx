@@ -1,17 +1,19 @@
 import { Form, useActionData, useNavigation } from 'react-router';
 import type { FormErrors } from './types';
 import Button from '@/ui/Button.tsx';
-import { useAppSelector } from '@/redux/hooks.ts';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks.ts';
 import { getUsername } from '@/redux/slices/userSlice.ts';
 import { getCart, getTotalCartPrice } from '@/redux/slices/cartSlice.ts';
 import EmptyCart from '@/features/cart/EmptyCart.tsx';
 import { formatCurrency } from '@/utils/helpers.ts';
 import { useState } from 'react';
+import { fetchAddress } from '@/redux/thunks.ts';
 
 const CreateOrder = () => {
     const navigation = useNavigation();
     const isSubmitting = navigation.state === 'submitting';
 
+    const dispatch = useAppDispatch();
     const cart = useAppSelector(getCart);
     const username = useAppSelector(getUsername);
     const formErrors = useActionData<FormErrors>();
