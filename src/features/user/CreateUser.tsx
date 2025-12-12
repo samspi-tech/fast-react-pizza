@@ -26,10 +26,12 @@ const CreateUser = () => {
             </p>
             <input
                 type="text"
+                name="username"
                 value={username}
+                autoComplete="username"
+                className="input mb-8 w-72"
                 placeholder="Your full name"
                 onChange={(e) => setUsername(e.target.value)}
-                className="input mb-8 w-72"
             />
             {username !== '' && (
                 <div>
