@@ -1,6 +1,6 @@
-import { createOrder } from '@/services/restaurant.service';
+import { createOrder, updateOrder } from '@/services/restaurant.service';
 import type { CartItemTypes } from '../cart/types';
-import { redirect } from 'react-router';
+import { type Params, redirect } from 'react-router';
 import type { CreateOrderType, FormData, FormErrors } from './types';
 import { isValidPhone } from '@/utils/helpers';
 import store from '@/redux/store.ts';
@@ -33,4 +33,15 @@ export const createOrderAction = async ({ request }: { request: Request }) => {
     store.dispatch(clearCart());
 
     return redirect(`/order/${newOrder.id}`);
+};
+
+export const updateOrderAction = async ({
+    params,
+}: {
+    params: Params<string>;
+}) => {
+    const id = params.orderId!;
+    const data = { priority: true };
+
+    return await updateOrder(id, data);
 };

@@ -8,7 +8,10 @@ import Cart from '@/features/cart/Cart';
 import CreateOrder from '@/features/order/CreateOrder';
 import Order from '@/features/order/Order';
 import { orderLoader } from '@/features/order/orderLoader';
-import { createOrderAction } from '@/features/order/orderAction';
+import {
+    createOrderAction,
+    updateOrderAction,
+} from '@/features/order/orderActions.ts';
 
 export const router = createBrowserRouter([
     {
@@ -38,6 +41,7 @@ export const router = createBrowserRouter([
                 path: '/order/:orderId',
                 Component: Order,
                 loader: orderLoader,
+                action: updateOrderAction,
                 ErrorBoundary: Error,
             },
         ],

@@ -40,3 +40,22 @@ export const createOrder = async (
         throw Error('Failed creating your order');
     }
 };
+
+export const updateOrder = async (
+    id: string,
+    updateObj: { priority: boolean }
+) => {
+    try {
+        const res = await fetch(`${PIZZA_BASE_URL}/order/${id}`, {
+            method: 'PATCH',
+            body: JSON.stringify(updateObj),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!res.ok) throw Error();
+    } catch (err) {
+        throw Error('Failed updating your order');
+    }
+};

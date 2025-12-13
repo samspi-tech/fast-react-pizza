@@ -4,6 +4,7 @@ import type { PizzaOrder } from './types';
 import OrderItem from '@/features/order/OrderItem.tsx';
 import type { PizzaMenu } from '@/features/menu/types.ts';
 import { useEffect } from 'react';
+import UpdateOrder from '@/features/order/UpdateOrder.tsx';
 
 const Order = () => {
     const fetcher = useFetcher<PizzaMenu>();
@@ -84,6 +85,7 @@ const Order = () => {
                     {formatCurrency(orderPrice! + priorityPrice!)}
                 </p>
             </div>
+            {!priority && <UpdateOrder />}
         </div>
     );
 };
