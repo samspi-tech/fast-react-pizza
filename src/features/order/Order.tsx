@@ -1,10 +1,19 @@
 import { calcMinutesLeft, formatCurrency, formatDate } from '@/utils/helpers';
-import { useLoaderData } from 'react-router';
+import { useFetcher, useLoaderData } from 'react-router';
 import type { PizzaOrder } from './types';
 import OrderItem from '@/features/order/OrderItem.tsx';
+import type { PizzaMenu } from '@/features/menu/types.ts';
+import { useEffect } from 'react';
 
 const Order = () => {
+    const fetcher = useFetcher<PizzaMenu>();
     const order = useLoaderData<PizzaOrder>();
+
+    useEffect(() => {
+        if (!fetcher.data && fetcher.state === 'idle') fetcher.load('/menu');
+    }, [fetcher]);
+
+    console.log(fetcher.data);
 
     const {
         id,
@@ -35,7 +44,16 @@ const Order = () => {
             </div>
             <ul className="divide-y divide-stone-200 border-t border-b border-stone-200">
                 {cart.map((item) => (
-                    <OrderItem key={item.pizzaId} item={item} />
+                    <OrderItem
+                        item={item}
+                        key={item.pizzaId}
+                        isLoadingIngredients={fetcher.state === 'loading'}
+                        ingredients={
+                            fetcher.data?.find(
+                                (dataItem) => dataItem.id === item.pizzaId
+                            )?.ingredients
+                        }
+                    />
                 ))}
             </ul>
             <div className="flex flex-wrap items-center justify-between gap-2 bg-stone-200 px-5 py-6">

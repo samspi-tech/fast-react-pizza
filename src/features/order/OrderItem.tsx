@@ -3,9 +3,15 @@ import type { CartItemTypes } from '@/features/cart/types.ts';
 
 type OrderItemProps = {
     item: CartItemTypes;
+    isLoadingIngredients: boolean;
+    ingredients?: string[];
 };
 
-const OrderItem = ({ item }: OrderItemProps) => {
+const OrderItem = ({
+    item,
+    isLoadingIngredients,
+    ingredients,
+}: OrderItemProps) => {
     const { quantity, name, totalPrice } = item;
 
     return (
@@ -16,6 +22,11 @@ const OrderItem = ({ item }: OrderItemProps) => {
                 </p>
                 <p className="font-bold">{formatCurrency(totalPrice)}</p>
             </div>
+            <p className="text-sm text-stone-500 capitalize italic">
+                {isLoadingIngredients
+                    ? 'Loading ingredients...'
+                    : ingredients?.join(', ')}
+            </p>
         </li>
     );
 };
