@@ -3,13 +3,13 @@ import Button from '@/ui/Button.tsx';
 import CartItem from '@/features/cart/CartItem.tsx';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks.ts';
 import { clearCart, getCart } from '@/redux/slices/cartSlice.ts';
-import { getUsername } from '@/redux/slices/userSlice.ts';
+import { getUser } from '@/redux/slices/userSlice.ts';
 import EmptyCart from '@/features/cart/EmptyCart.tsx';
 
 const Cart = () => {
     const dispatch = useAppDispatch();
     const cart = useAppSelector(getCart);
-    const username = useAppSelector(getUsername);
+    const { username } = useAppSelector(getUser);
 
     if (!cart.length) return <EmptyCart />;
 

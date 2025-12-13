@@ -17,6 +17,7 @@ export type FormData = {
     address: string;
     priority?: string;
     cart: string;
+    position: string;
 };
 
 export type CreateOrderType = {
@@ -25,6 +26,7 @@ export type CreateOrderType = {
     address: string;
     priority: boolean;
     cart: CartItemTypes;
+    position: string;
 };
 
 export type FormErrors = {

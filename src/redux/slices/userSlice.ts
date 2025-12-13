@@ -33,9 +33,10 @@ const userSlice = createSlice({
                 state.address = action.payload.address;
                 state.status = 'idle';
             })
-            .addCase(fetchAddress.rejected, (state, action) => {
+            .addCase(fetchAddress.rejected, (state) => {
                 state.status = 'error';
-                state.error = action.error.message;
+                state.error =
+                    'There was a problem getting your address. Make sure to enable Geolocation or to fill this field before submitting.';
             }),
 });
 
@@ -43,7 +44,15 @@ export const { updateName } = userSlice.actions;
 
 export default userSlice.reducer;
 
-export const getUsername = createSelector(
+export const getUser = createSelector(
     [(state: RootState) => state.user],
-    (user) => user.username
+    ({ username, position, status, error, address }) => {
+        return {
+            username,
+            status,
+            error,
+            address,
+            position,
+        };
+    }
 );

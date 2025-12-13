@@ -2,7 +2,7 @@ import { Form, useActionData, useNavigation } from 'react-router';
 import type { FormErrors } from './types';
 import Button from '@/ui/Button.tsx';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks.ts';
-import { getUsername } from '@/redux/slices/userSlice.ts';
+import { getUser } from '@/redux/slices/userSlice.ts';
 import { getCart, getTotalCartPrice } from '@/redux/slices/cartSlice.ts';
 import EmptyCart from '@/features/cart/EmptyCart.tsx';
 import { formatCurrency } from '@/utils/helpers.ts';
@@ -13,9 +13,14 @@ const CreateOrder = () => {
     const navigation = useNavigation();
     const isSubmitting = navigation.state === 'submitting';
 
+    const { username, status, error, position, address } =
+        useAppSelector(getUser);
+    const isAddressError = status === 'error';
+    const isLoadingAddress = status === 'loading';
+    const hasAddressPosition = position.latitude && position.longitude;
+
     const dispatch = useAppDispatch();
     const cart = useAppSelector(getCart);
-    const username = useAppSelector(getUsername);
     const formErrors = useActionData<FormErrors>();
     const [hasPriority, setHasPriority] = useState(false);
     const totalCartPrice = useAppSelector(getTotalCartPrice);
@@ -64,7 +69,7 @@ const CreateOrder = () => {
                         )}
                     </div>
                 </div>
-                <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
+                <div className="relative mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
                     <label htmlFor="address" className="sm:basis-40">
                         Address
                     </label>
@@ -74,10 +79,32 @@ const CreateOrder = () => {
                             type="text"
                             id="address"
                             name="address"
+                            defaultValue={address}
                             className="input w-full"
+                            disabled={isLoadingAddress}
                             autoComplete="street-address"
                         />
+                        {isAddressError && (
+                            <p className="mt-2 rounded-md bg-red-100 p-2 text-xs text-red-700">
+                                {error}
+                            </p>
+                        )}
                     </div>
+                    {!hasAddressPosition && (
+                        <span className="absolute top-[43px] right-[11px] z-50 sm:top-[5px] md:right-[5px]">
+                            <Button
+                                type="button"
+                                variant="small"
+                                element="button"
+                                disabled={isLoadingAddress}
+                                onClick={() => dispatch(fetchAddress())}
+                            >
+                                {isLoadingAddress
+                                    ? 'getting address...'
+                                    : 'get address'}
+                            </Button>
+                        </span>
+                    )}
                 </div>
                 <div className="mb-12 flex items-center gap-5">
                     <input
@@ -94,15 +121,24 @@ const CreateOrder = () => {
                 </div>
                 <div>
                     <input
-                        type="hidden"
                         name="cart"
+                        type="hidden"
                         value={JSON.stringify(cart)}
+                    />
+                    <input
+                        type="hidden"
+                        name="position"
+                        value={
+                            hasAddressPosition
+                                ? `${position.latitude}, ${position.longitude}`
+                                : ''
+                        }
                     />
                     <Button
                         type="submit"
                         element="button"
                         variant="primary"
-                        disabled={isSubmitting}
+                        disabled={isSubmitting || isLoadingAddress}
                     >
                         {isSubmitting
                             ? 'Placing order...'

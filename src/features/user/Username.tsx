@@ -1,8 +1,8 @@
 import { useAppSelector } from '@/redux/hooks.ts';
-import { getUsername } from '@/redux/slices/userSlice.ts';
+import { getUser } from '@/redux/slices/userSlice.ts';
 
 const Username = () => {
-    const username = useAppSelector(getUsername);
+    const { username } = useAppSelector(getUser);
 
     if (!username) return null;
 

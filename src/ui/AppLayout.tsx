@@ -5,14 +5,14 @@ import Loading from './Loading';
 import { useAppSelector } from '@/redux/hooks.ts';
 import { Activity } from 'react';
 import { getCart } from '@/redux/slices/cartSlice.ts';
-import { getUsername } from '@/redux/slices/userSlice.ts';
+import { getUser } from '@/redux/slices/userSlice.ts';
 
 const AppLayout = () => {
     const navigation = useNavigation();
     const isLoading = navigation.state === 'loading';
 
     const cart = useAppSelector(getCart);
-    const username = useAppSelector(getUsername);
+    const { username } = useAppSelector(getUser);
 
     const isCartVisible = username && cart.length > 0;
 
