@@ -10,10 +10,12 @@ const Order = () => {
     const order = useLoaderData<PizzaOrder>();
 
     useEffect(() => {
-        if (!fetcher.data && fetcher.state === 'idle') fetcher.load('/menu');
+        if (!fetcher.data && fetcher.state === 'idle') {
+            fetcher.load('/menu').catch((err) => {
+                console.error(err);
+            });
+        }
     }, [fetcher]);
-
-    console.log(fetcher.data);
 
     const {
         id,
